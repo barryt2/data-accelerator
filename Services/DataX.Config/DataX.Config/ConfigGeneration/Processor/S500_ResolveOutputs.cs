@@ -192,8 +192,8 @@ namespace DataX.Config.ConfigGeneration.Processor
             {
                 var sparkKeyVaultName = Configuration[Constants.ConfigSettingName_RuntimeKeyVaultName];
 
-                string connectionString = await KeyVaultClient.GetSecretFromKeyVaultAsync(sparkKeyVaultName, uiOutput.Properties.ConnectionString);
-                var blobPath = $"wasbs://{uiOutput.Properties.ContainerName}{ParseBlobAccountName(connectionString)}.blob.core.windows.net/{uiOutput.Properties.BlobPrefix}/%1$tY/%1$tm/%1$td/%1$tH/${{quarterBucket}}/${{minuteBucket}}";
+                string connectionString = await KeyVaultClient.ResolveSecretUriAsync(uiOutput.Properties.ConnectionString);
+                var blobPath = $"wasbs://{uiOutput.Properties.ContainerName}@{ParseBlobAccountName(connectionString)}.blob.core.windows.net/{uiOutput.Properties.BlobPrefix}/%1$tY/%1$tm/%1$td/%1$tH/${{quarterBucket}}/${{minuteBucket}}";
                 var secretId = $"{configName}-output";
                 var blobPathSecret = await KeyVaultClient.SaveSecretAsync(sparkKeyVaultName, secretId, blobPath, true);
                 FlowBlobOutputSpec blobOutput = new FlowBlobOutputSpec()
