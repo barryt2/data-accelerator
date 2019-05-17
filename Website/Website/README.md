@@ -72,7 +72,7 @@ az login
 * Deploy
 ```
 node .\deploy\zipsite.js
-.\deploy\deploy.cmd <webapp name> <subscription name>
+.\deploy\deploy.cmd <webapp name> <subscription name> <resource group name>
 ```
 
 ### (Optional) How to target a locally hosted service
